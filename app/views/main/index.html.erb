@@ -25,16 +25,40 @@
           <%= form_tag("/main/send_email", method: "get") do |f|%>
             <div class="form-group">
               <label for="desiredPropertyLocation">Desired Property Location</label>
-              <%= text_field_tag(:desired_property_location, nil, {class: 'form-control', placeholder: 'Enter Location'}) %> 
+              <div class="row">
+                <div class ="col-md-5">
+                  <label for="desiredStreetAddress">Address </label>
+                  <%= text_field_tag(:desired_st_addr, nil, {class: 'form-control', placeholder: 'Street address'}) %>
+                </div>
+                <div class ="col-md-3">
+                   <label for="desiredCity">City </label>
+                  <%= text_field_tag(:desired_city, nil, {class: 'form-control', placeholder: 'San Francisco'}) %>
+                </div>
+                <div class ="col-md-2">
+                  <label for="desiredState">State </label>
+                  <%= select_tag(:desired_state, options_for_select(MainController.us_states), {class: "form-control"}) %>
+                </div>
+                <div class ="col-md-2">
+                  <label for="desiredZip">ZIP </label>
+                  <%= text_field_tag(:desired_zip, nil, {class: 'form-control', placeholder: '94100'}) %>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="acceptableDistance">Acceptable Distance ( Miles)</label>
+              <div class= 'row'>
+              <div class='col-md-2'>
+              <%= select_tag(:acceptable_dist, options_for_select([[5,5],[20,20],[50,50],[100,100]]), {class: "form-control"}) %> 
+              </div>
+              </div>
             </div>
             <div class="form-group">
               <label for="priceRange">Price Range</label>
-              <!-- <input type="text" class="form-control" id="priceRange" placeholder="ie: $100000 - $200000"> -->
-              <%= text_field_tag(:price_range, nil, {class: 'form-control', placeholder: 'ie: $100000 - $200000'}) %> 
+              <%= text_field_tag(:price_range, nil, {class: 'form-control', placeholder: '$100000 - $200000'}) %> 
             </div>
             <div class="form-group">
               <label for="size">Size</label>
-              <%= text_field_tag(:size, nil, {class: 'form-control', placeholder: 'square fts'}) %> 
+              <%= text_field_tag(:size, nil, {class: 'form-control', placeholder: 'Square Feets/ Square Meters'}) %> 
             </div>
             <div class="form-group row">
               <label class="col-md-4">
