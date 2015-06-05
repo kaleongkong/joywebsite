@@ -1,11 +1,44 @@
 class MainController < ApplicationController
   def index
+    @sent = params[:sent]
+    puts "sent: #{@sent}"
   end
   def send_email
     UserMailer.send_email(params).deliver!
-  	redirect_to :back
+  	redirect_to :controller=> 'main',:action=>'index', :sent => true
   end
 
+  def self.sf_districts
+    districts= ["Castro District",
+    "Chinatown", 
+    "Cole Valley",
+    "Financial District",
+    "Fisherman's Wharf",
+    "Haight-Ashbury",
+    "Hayes Valley",
+    "Japantown",
+    "Lower Haight",
+    "Marina",
+    "Mission District",
+    "Nob Hill",
+    "Noe Valley",
+    "North Beach",
+    "Pacific Heights",
+    "Panhandle",
+    "Potrero Hill",
+    "Presidio",
+    "Richmond",
+    "Russian Hill",
+    "Sea Cliff",
+    "Sixth Street",
+    "SOMA",
+    "Sunset",
+    "Tenderloin",
+    "Union Square",
+    "Upper Market"]
+    districts.map{|d| [d,d]}
+  end
+  
   def self.us_states
     [
       ['Alabama', 'AL'],

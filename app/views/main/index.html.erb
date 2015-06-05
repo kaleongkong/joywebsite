@@ -6,8 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Joy Real Estate</title>
-
     <%= render partial: "header" %>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+    <script>
+    var modal_status = <%=raw @sent ? "\"show\"" : "\"hide\"" %>
+    $(document).ready(function(){
+      $('#first_modal').modal(modal_status);
+      $('#survey_form').validate({
+        rules: {
+            name: {
+              minlength: 10,
+              required: true
+            },
+            email: {
+              required: true
+            },
+            desired_st_addr: {
+              required: true
+            },
+        },
+        highlight: function (element) {
+            $(element).closest('.control-group').removeClass('success').addClass('error');
+        },
+        success: function (element) {
+            element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
+        }
+      });
+    });
+    </script>
   </head>
   <body>
     <div class = "container">
@@ -22,25 +48,25 @@
         </div>
         
         <div class="col-md-8">
-          <%= form_tag("/main/send_email", method: "get") do |f|%>
+          <%= form_tag("/main/send_email", {method: "get", id: "survey_form"}) do |f|%>
             <div class="form-group">
-              <label for="desiredPropertyLocation">Desired Property Location</label>
+              <label for="name">Name</label>
+              <%= text_field_tag(:name, nil, {class: 'form-control', placeholder: 'Your Name'}) %> 
+            </div>
+            <div class="form-group">
+              <label for="email">E-Mail</label>
+              <%= text_field_tag(:email, nil, {class: 'form-control', placeholder: 'mail@example.com'}) %> 
+            </div>
+            <div class="form-group">
+              <!-- <label for="desiredPropertyLocation">Desired Property Location</label> -->
               <div class="row">
-                <div class ="col-md-5">
-                  <label for="desiredStreetAddress">Address </label>
-                  <%= text_field_tag(:desired_st_addr, nil, {class: 'form-control', placeholder: 'Street address'}) %>
+                <div class ="col-md-8">
+                  <label for="desiredStreetAddress">Desired Property Location </label>
+                  <%= text_field_tag(:desired_st_addr, nil, {class: 'form-control', placeholder: 'San Francisco Street Address'}) %>
                 </div>
-                <div class ="col-md-3">
-                   <label for="desiredCity">City </label>
-                  <%= text_field_tag(:desired_city, nil, {class: 'form-control', placeholder: 'San Francisco'}) %>
-                </div>
-                <div class ="col-md-2">
-                  <label for="desiredState">State </label>
-                  <%= select_tag(:desired_state, options_for_select(MainController.us_states), {class: "form-control"}) %>
-                </div>
-                <div class ="col-md-2">
-                  <label for="desiredZip">ZIP </label>
-                  <%= text_field_tag(:desired_zip, nil, {class: 'form-control', placeholder: '94100'}) %>
+                <div class ="col-md-4">
+                  <label for="desiredState">District (Optional) </label>
+                  <%= select_tag(:desired_state, options_for_select(MainController.sf_districts), {class: "form-control"}) %>
                 </div>
               </div>
             </div>
@@ -81,7 +107,22 @@
           <% end %>
         </div>
       </div>
-      
+      <div class="modal" id="first_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header alert alert-success">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Thank you!</h4>
+            </div>
+            <div class="modal-body">
+              <p>Your response has been submitted. We will try our best to respond you within a week.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" id ="close_modal" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
