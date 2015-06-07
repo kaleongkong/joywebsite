@@ -65,8 +65,8 @@
                   <%= text_field_tag(:desired_st_addr, nil, {class: 'form-control', placeholder: 'San Francisco Street Address'}) %>
                 </div>
                 <div class ="col-md-4">
-                  <label for="desiredState">District (Optional) </label>
-                  <%= select_tag(:desired_state, options_for_select(MainController.sf_districts), {class: "form-control"}) %>
+                  <label for="desiredCity">City </label>
+                  <%= select_tag(:desired_state, options_for_select(MainController.available_cities), {class: "form-control"}) %>
                 </div>
               </div>
             </div>

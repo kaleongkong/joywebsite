@@ -1,44 +1,20 @@
 class MainController < ApplicationController
   def index
     @sent = params[:sent]
+    puts "#{District.cities[0]}"
     puts "sent: #{@sent}"
+    @home_active="active"
   end
   def send_email
     UserMailer.send_email(params).deliver!
   	redirect_to :controller=> 'main',:action=>'index', :sent => true
   end
   def blog
+    @blog_active="active"
   end
 
-  def self.sf_districts
-    districts= ["Castro District",
-    "Chinatown", 
-    "Cole Valley",
-    "Financial District",
-    "Fisherman's Wharf",
-    "Haight-Ashbury",
-    "Hayes Valley",
-    "Japantown",
-    "Lower Haight",
-    "Marina",
-    "Mission District",
-    "Nob Hill",
-    "Noe Valley",
-    "North Beach",
-    "Pacific Heights",
-    "Panhandle",
-    "Potrero Hill",
-    "Presidio",
-    "Richmond",
-    "Russian Hill",
-    "Sea Cliff",
-    "Sixth Street",
-    "SOMA",
-    "Sunset",
-    "Tenderloin",
-    "Union Square",
-    "Upper Market"]
-    districts.map{|d| [d,d]}
+  def self.available_cities
+    District.cities.map{|d| [d,d]}
   end
   
   def self.us_states
