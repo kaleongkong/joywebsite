@@ -7,6 +7,8 @@ class MainController < ApplicationController
     UserMailer.send_email(params).deliver!
   	redirect_to :controller=> 'main',:action=>'index', :sent => true
   end
+  def blog
+  end
 
   def self.sf_districts
     districts= ["Castro District",
