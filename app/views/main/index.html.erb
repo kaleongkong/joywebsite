@@ -32,7 +32,20 @@
             element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
         }
       });
+      $('#sm_district').css({display: "none"});
     });
+    function clickOption() {
+      if ($("#desired_city").find(':selected').text()!= "San Francisco"){
+        $('#sf_district').css({display: "none"});
+      }else{
+        $('#sf_district').css({display: "inline"});
+      }
+      if ($("#desired_city").find(':selected').text()!= "San Mateo"){
+        $('#sm_district').css({display: "none"});
+      }else{
+        $('#sm_district').css({display: "inline"});
+      }
+    }
     </script>
   </head>
   <body>
@@ -58,24 +71,24 @@
               <%= text_field_tag(:email, nil, {class: 'form-control', placeholder: 'mail@example.com'}) %> 
             </div>
             <div class="form-group">
-              <!-- <label for="desiredPropertyLocation">Desired Property Location</label> -->
               <div class="row">
-                <div class ="col-md-8">
-                  <label for="desiredStreetAddress">Desired Property Location </label>
-                  <%= text_field_tag(:desired_st_addr, nil, {class: 'form-control', placeholder: 'San Francisco Street Address'}) %>
-                </div>
                 <div class ="col-md-4">
-                  <label for="desiredCity">City </label>
-                  <%= select_tag(:desired_state, options_for_select(MainController.available_cities), {class: "form-control"}) %>
+                  <label for="desiredDistrict">District </label>
+                  <div id="sf_district">
+                    <%= select_tag(:desired_district, options_for_select(MainController.districts('San Francisco')), {class: 'form-control'}) %>
+                  </div>
+                  <div id="sm_district">
+                    <%= select_tag(:desired_district, options_for_select(MainController.districts('San Mateo')), {class: 'form-control'}) %>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="acceptableDistance">Acceptable Distance ( Miles)</label>
-              <div class= 'row'>
-              <div class='col-md-2'>
-              <%= select_tag(:acceptable_dist, options_for_select([[5,5],[20,20],[50,50],[100,100]]), {class: "form-control"}) %> 
-              </div>
+                <div class ="col-md-3">
+                  <label for="desiredCity">City </label>
+                  <%= select_tag(:desired_city, options_for_select(MainController.available_cities), {class: "form-control", onchange: "clickOption()"}) %>
+                </div>
+                <div class ="col-md-3">
+                  <label for="acceptableDistance">Acceptable Dist.</label>
+                  <%= select_tag(:acceptable_dist, options_for_select([["5 Miles",5],["20 Miles",20],["50 Miles",50],["100 Miles",100]]), {class: "form-control"}) %> 
+                </div>
               </div>
             </div>
             <div class="form-group">
@@ -123,6 +136,13 @@
           </div>
         </div>
       </div>
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p>Copyright &copy; Joy Realtor 2015</p>
+          </div>
+        </div>
+      </footer>
     </div>
   </body>
 </html>

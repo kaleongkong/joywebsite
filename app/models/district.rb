@@ -2,7 +2,7 @@ class District < ActiveRecord::Base
   def self.cities
     [
       "San Francisco", 
-      "San Meteo"
+      "San Mateo"
     ]
   end
   def self.regions
@@ -19,14 +19,14 @@ class District < ActiveRecord::Base
         "District 9",
         "District 10",
       ],
-      "San Meteo"=>[
+      "San Mateo"=>[
         "North",
         "South",
         "Northwest"
       ]
     }
   end
-  def self.regions
+  def self.districts
       {
       "San Francisco District 1/ Northwest"=> [
         "Sea Cliff",
@@ -137,7 +137,7 @@ class District < ActiveRecord::Base
         "Candlestick Point",
         "Little Hollywood",
       ],
-      "San Meteo Northwest"=> [
+      "San Mateo Northwest"=> [
         "Original Daly City",
         "Serramonte",
         "Southern Hills",
@@ -155,12 +155,12 @@ class District < ActiveRecord::Base
         "Brisbane",
         "Bayridge/Linda Vista"
       ],
-      "San Meteo North"=> [
+      "San Mateo North"=> [
         "Pacifica",
         "San Bruno",
         "South San Francisco"
       ],
-      "San Meteo South"=>[
+      "San Mateo South"=>[
         "Belmont",
         "Burlingame",
         "Foster City",
