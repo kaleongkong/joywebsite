@@ -9,9 +9,19 @@
     <%= render partial: "header" %>
     <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
     <script>
+    var area_listing_count = 1
     var modal_status = <%=raw @sent ? "\"show\"" : "\"hide\"" %>
     $(document).ready(function(){
       $('#first_modal').modal(modal_status);
+      var area_selecting_section = generate_area_listing();
+      $('#area_listing').html(area_selecting_section);
+
+      var district_id = '#district__' + area_listing_count
+      var district_list = "<%=escape_javascript(select_tag(:desired_district__, options_for_select(MainController.districts('San Francisco')), {class: 'form-control'}))%>"
+      district_list = district_list.replace(/__/g, '__'+ area_listing_count);
+      $(district_id).html(district_list);
+      area_listing_count ++
+
       $('#survey_form').validate({
         rules: {
             name: {
@@ -33,18 +43,42 @@
         }
       });
       $('#sm_district').css({display: "none"});
+      $( "#plus_button" ).click(function() {
+        var area_selecting_section = generate_area_listing();
+        $('#area_listing').append(area_selecting_section)
+        var district_id = '#district__' + area_listing_count
+        var district_list = "<%=escape_javascript(select_tag(:desired_district__, options_for_select(MainController.districts('San Francisco')), {class: 'form-control'}))%>"
+        district_list = district_list.replace(/__/g, '__'+ area_listing_count);
+        $(district_id).html(district_list);
+        area_listing_count ++
+        desired_city_on_change();
+      });
+      desired_city_on_change();
     });
-    function clickOption() {
-      if ($("#desired_city").find(':selected').text()!= "San Francisco"){
-        $('#sf_district').css({display: "none"});
-      }else{
-        $('#sf_district').css({display: "inline"});
-      }
-      if ($("#desired_city").find(':selected').text()!= "San Mateo"){
-        $('#sm_district').css({display: "none"});
-      }else{
-        $('#sm_district').css({display: "inline"});
-      }
+    function desired_city_on_change(){
+      $('.desired_city').change(function(){
+        desired_city_id = '#' + $(this).attr('id')
+        current_count = desired_city_id.split('__')[1]
+        console.log($(desired_city_id))
+        console.log($(desired_city_id).find(':selected'))
+        console.log($(desired_city_id).find(':selected').text())
+        if ($(desired_city_id).find(':selected').text()== 'San Francisco'){
+          var district_id = '#district__' + current_count
+          var district_list = "<%=escape_javascript(select_tag(:desired_district__, options_for_select(MainController.districts('San Francisco')), {class: 'form-control'}))%>"
+          district_list = district_list.replace(/__/g, '__'+ current_count);
+          $(district_id).html(district_list);
+        }else if ($(desired_city_id).find(':selected').text()== 'San Mateo'){
+          var district_id = '#district__' + current_count
+          var district_list = "<%=escape_javascript(select_tag(:desired_district__, options_for_select(MainController.districts('San Mateo')), {class: 'form-control'}))%>"
+          district_list = district_list.replace(/__/g, '__'+ current_count);
+          $(district_id).html(district_list);
+        }
+      });
+    }
+    function generate_area_listing(){
+      var area_selecting_section = "<%=escape_javascript(render(partial: 'area_listing'))%>"
+      area_selecting_section = area_selecting_section.replace(/__/g, '__'+ area_listing_count);
+      return area_selecting_section
     }
     </script>
   </head>
@@ -72,22 +106,13 @@
             </div>
             <div class="form-group">
               <div class="row">
-                <div class ="col-md-4">
-                  <label for="desiredDistrict">District </label>
-                  <div id="sf_district">
-                    <%= select_tag(:desired_district, options_for_select(MainController.districts('San Francisco')), {class: 'form-control'}) %>
-                  </div>
-                  <div id="sm_district">
-                    <%= select_tag(:desired_district, options_for_select(MainController.districts('San Mateo')), {class: 'form-control'}) %>
-                  </div>
+                <div class="col-md-10" id='area_listing'>
                 </div>
-                <div class ="col-md-3">
-                  <label for="desiredCity">City </label>
-                  <%= select_tag(:desired_city, options_for_select(MainController.available_cities), {class: "form-control", onchange: "clickOption()"}) %>
-                </div>
-                <div class ="col-md-3">
-                  <label for="acceptableDistance">Acceptable Dist.</label>
-                  <%= select_tag(:acceptable_dist, options_for_select([["5 Miles",5],["20 Miles",20],["50 Miles",50],["100 Miles",100]]), {class: "form-control"}) %> 
+                <div class="col-md-1">
+                  <label><br></label>
+                  <button type="button" class="btn btn-default btn-number" id = "plus_button" data-type="plus">
+                      <span class="glyphicon glyphicon-plus"></span><b> More</b>
+                  </button>
                 </div>
               </div>
             </div>
