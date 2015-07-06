@@ -55,8 +55,8 @@
         desired_city_on_change();
       });
       desired_city_on_change();
+      console.log(Gmaps);
       handler = Gmaps.build('Google');
-      // handler.zoomOut(30);
       handler.buildMap({ provider: {}, internal: {id: 'map', zoom: 30}}, function(){
         markers = handler.addMarkers([
           {
