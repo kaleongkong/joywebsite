@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'main/index'
   get 'main/send_email'
   get 'main/blog'
+  get 'main/test'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

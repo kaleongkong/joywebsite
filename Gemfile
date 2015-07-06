@@ -41,4 +41,5 @@ gem 'spring',        group: :development
 gem 'bootstrap-sass', '~> 3.3.0'
 gem 'autoprefixer-rails'
 gem 'pg'
+gem 'gmaps4rails'
 

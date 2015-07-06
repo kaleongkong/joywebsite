@@ -13,6 +13,9 @@ class MainController < ApplicationController
     @blog_active="active"
   end
 
+  def test
+  end
+
   def self.available_cities
     District.cities.map!{|d| [d,d]}
   end
