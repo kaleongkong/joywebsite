@@ -12,36 +12,34 @@
     var area_listing_count = 1
     var modal_status = <%=raw @sent ? "\"show\"" : "\"hide\"" %>
     $(document).ready(function(){
+      $('#survey_form').validate({
+        rules: {
+            name: {
+              minlength: 10,
+              required: true
+            },
+            email: {
+              required: true
+            },
+            desired_st_addr: {
+              required: true
+            },
+        },
+        highlight: function (element) {
+            $(element).closest('.control-group').removeClass('success').addClass('error');
+        },
+        success: function (element) {
+            element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
+        }
+      });
       $('#first_modal').modal(modal_status);
       var area_selecting_section = generate_area_listing();
       $('#area_listing').html(area_selecting_section);
-
       var district_id = '#district__' + area_listing_count
       var district_list = "<%=escape_javascript(select_tag(:desired_district__, options_for_select(MainController.districts('San Francisco')), {class: 'form-control'}))%>"
       district_list = district_list.replace(/__/g, '__'+ area_listing_count);
       $(district_id).html(district_list);
       area_listing_count ++
-
-      // $('#survey_form').validate({
-      //   rules: {
-      //       name: {
-      //         minlength: 10,
-      //         required: true
-      //       },
-      //       email: {
-      //         required: true
-      //       },
-      //       desired_st_addr: {
-      //         required: true
-      //       },
-      //   },
-      //   highlight: function (element) {
-      //       $(element).closest('.control-group').removeClass('success').addClass('error');
-      //   },
-      //   success: function (element) {
-      //       element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
-      //   }
-      // });
       $('#sm_district').css({display: "none"});
       $( "#plus_button" ).click(function() {
         var area_selecting_section = generate_area_listing();
