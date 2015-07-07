@@ -16,22 +16,10 @@
     var modal_status = <%=raw @sent ? "\"show\"" : "\"hide\"" %>
     $(document).ready(function(){
       handler = Gmaps.build('Google');
-      handler.buildMap({ provider: {}, internal: {id: 'map', zoom: 30}}, function(){
-        markers = handler.addMarkers([
-          {
-            "lat": 37.785843,
-            "lng": -122.490907,
-            "picture": {
-              "url": "../assets/marker.png",
-              "width":  36,
-              "height": 36
-            },
-            "infowindow": "Sea Cliff District"
-          }
-        ]);
-        handler.bounds.extendWith(markers);
-        handler.fitMapToBounds();
-        handler.getMap().setZoom(14);
+      // handler.buildMap { provider: { maxZoom: 3 }, internal: {id: 'map'} }, -> handler.map.centerOn({ lat: 37.785843, lng: -122.490907 })
+      handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+        handler.map.centerOn({ lat: 37.773972, lng: -122.431297})
+        handler.getMap().setZoom(7);
       });
       $('#survey_form').validate({
         rules: {
@@ -89,6 +77,24 @@
           district_list = district_list.replace(/__/g, '__'+ current_count);
           $(district_id).html(district_list);
         }
+        handler = Gmaps.build('Google');
+        handler.buildMap({ provider: {}, internal: {id: 'map', zoom: 30}}, function(){
+          markers = handler.addMarkers([
+            {
+              "lat": 37.785843,
+              "lng": -122.490907,
+              "picture": {
+                "url": "../assets/marker.png",
+                "width":  36,
+                "height": 36
+              },
+              "infowindow": "Sea Cliff District"
+            }
+          ]);
+          handler.bounds.extendWith(markers);
+          handler.fitMapToBounds();
+          handler.getMap().setZoom(14);
+        });
       });
     }
     function generate_area_listing(){
