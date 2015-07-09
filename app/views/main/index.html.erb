@@ -8,19 +8,42 @@
     <title>Joy Real Estate</title>
     <%= render partial: "header" %>
     <script type='text/javascript' src='https://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js'></script>
-    <script type='text/javascript' src='https://maps.google.com/maps/api/js?v=3.13&amp;sensor=false&amp;libraries=geometry'></script>
-    <script src='//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js' type='text/javascript'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js' type='text/javascript'></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
     <script>
+    var geocoder;
+    var map;
+    var marker
+    function initialize() {
+      geocoder = new google.maps.Geocoder();
+      var latlng = new google.maps.LatLng(37.773972, -122.431297);
+      var mapOptions = {
+        zoom: 10,
+        center: latlng
+      }
+      map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    }
+    function codeAddress(address) {
+      geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (typeof marker !== 'undefined'){
+            marker.setMap(null);
+          }
+          map.setCenter(results[0].geometry.location);
+          map.setZoom(14);
+          marker = new google.maps.Marker({
+              map: map,
+              position: results[0].geometry.location
+          });
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+
     var area_listing_count = 1
     var modal_status = <%=raw @sent ? "\"show\"" : "\"hide\"" %>
     $(document).ready(function(){
-      handler = Gmaps.build('Google');
-      // handler.buildMap { provider: { maxZoom: 3 }, internal: {id: 'map'} }, -> handler.map.centerOn({ lat: 37.785843, lng: -122.490907 })
-      handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-        handler.map.centerOn({ lat: 37.773972, lng: -122.431297})
-        handler.getMap().setZoom(7);
-      });
       $('#survey_form').validate({
         rules: {
             name: {
@@ -45,7 +68,7 @@
       var area_selecting_section = generate_area_listing();
       $('#area_listing').html(area_selecting_section);
       var district_id = '#district__' + area_listing_count
-      var district_list = "<%=escape_javascript(select_tag(:desired_district__, options_for_select(MainController.districts('San Francisco')), {class: 'form-control'}))%>"
+      var district_list = "<%=escape_javascript(select_tag(:desired_district__, options_for_select(District.districts('San Francisco')), {class: 'form-control desired_district'}))%>"
       district_list = district_list.replace(/__/g, '__'+ area_listing_count);
       $(district_id).html(district_list);
       area_listing_count ++
@@ -54,13 +77,15 @@
         var area_selecting_section = generate_area_listing();
         $('#area_listing').append(area_selecting_section)
         var district_id = '#district__' + area_listing_count
-        var district_list = "<%=escape_javascript(select_tag(:desired_district__, options_for_select(MainController.districts('San Francisco')), {class: 'form-control'}))%>"
+        var district_list = "<%=escape_javascript(select_tag(:desired_district__, options_for_select(District.districts('San Francisco')), {class: 'form-control desired_district'}))%>"
         district_list = district_list.replace(/__/g, '__'+ area_listing_count);
         $(district_id).html(district_list);
         area_listing_count ++
         desired_city_on_change();
+        desired_district_on_change();
       });
       desired_city_on_change();
+      desired_district_on_change();
     });
     function desired_city_on_change(){
       $('.desired_city').change(function(){
@@ -68,33 +93,22 @@
         current_count = desired_city_id.split('__')[1]
         if ($(desired_city_id).find(':selected').text()== 'San Francisco'){
           var district_id = '#district__' + current_count
-          var district_list = "<%=escape_javascript(select_tag(:desired_district__, options_for_select(MainController.districts('San Francisco')), {class: 'form-control'}))%>"
+          var district_list = "<%=escape_javascript(select_tag(:desired_district__, options_for_select(District.districts('San Francisco')), {class: 'form-control desired_district'}))%>"
           district_list = district_list.replace(/__/g, '__'+ current_count);
           $(district_id).html(district_list);
         }else if ($(desired_city_id).find(':selected').text()== 'San Mateo'){
           var district_id = '#district__' + current_count
-          var district_list = "<%=escape_javascript(select_tag(:desired_district__, options_for_select(MainController.districts('San Mateo')), {class: 'form-control'}))%>"
+          var district_list = "<%=escape_javascript(select_tag(:desired_district__, options_for_select(District.districts('San Mateo')), {class: 'form-control desired_district'}))%>"
           district_list = district_list.replace(/__/g, '__'+ current_count);
           $(district_id).html(district_list);
         }
-        handler = Gmaps.build('Google');
-        handler.buildMap({ provider: {}, internal: {id: 'map', zoom: 30}}, function(){
-          markers = handler.addMarkers([
-            {
-              "lat": 37.785843,
-              "lng": -122.490907,
-              "picture": {
-                "url": "../assets/marker.png",
-                "width":  36,
-                "height": 36
-              },
-              "infowindow": "Sea Cliff District"
-            }
-          ]);
-          handler.bounds.extendWith(markers);
-          handler.fitMapToBounds();
-          handler.getMap().setZoom(14);
-        });
+        desired_district_on_change();
+      });
+    }
+    function desired_district_on_change(){
+      $('.desired_district').change(function(){
+        desired_district_id = '#' + $(this).attr('id')
+        codeAddress($(desired_district_id).find(':selected').val());
       });
     }
     function generate_area_listing(){

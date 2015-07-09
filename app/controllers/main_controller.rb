@@ -19,14 +19,6 @@ class MainController < ApplicationController
   def self.available_cities
     District.cities.map!{|d| [d,d]}
   end
-
-  def self.districts(city)
-    ds=[]
-    District.districts.keys.each do |k|
-      ds += District.districts[k] if k.include?(city)
-    end
-    ds
-  end
   
   def self.us_states
     [
