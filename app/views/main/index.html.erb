@@ -96,11 +96,13 @@
           var district_list = "<%=escape_javascript(select_tag(:desired_district__, options_for_select(District.districts('San Francisco')), {class: 'form-control desired_district'}))%>"
           district_list = district_list.replace(/__/g, '__'+ current_count);
           $(district_id).html(district_list);
+          codeAddress($(district_id+" option:first").val());
         }else if ($(desired_city_id).find(':selected').text()== 'San Mateo'){
           var district_id = '#district__' + current_count
           var district_list = "<%=escape_javascript(select_tag(:desired_district__, options_for_select(District.districts('San Mateo')), {class: 'form-control desired_district'}))%>"
           district_list = district_list.replace(/__/g, '__'+ current_count);
           $(district_id).html(district_list);
+          codeAddress($(district_id+" option:first").val());
         }
         desired_district_on_change();
       });

@@ -14,11 +14,7 @@ class District < ActiveRecord::Base
   def self.districts(city)
     ds=[]
     District.regions2districts.keys.each do |k|
-      if city == 'San Francisco'
-        ds += District.regions2districts[k].map{|elm| [elm, "#{elm} District, #{city}"]} if k.include?(city)
-      else
-        ds += District.regions2districts[k].map{|elm| [elm, "#{elm}, #{city}"]} if k.include?(city)
-      end
+      ds += District.regions2districts[k].map{|elm| [elm, "#{elm}, #{city}"]} if k.include?(city)
     end
     ds
   end
@@ -63,7 +59,7 @@ class District < ActiveRecord::Base
       ],
       'San Francisco Disrict 2/ Central West'=> [
         'Outer Sunset',
-        'Central Sunset',
+        'Sunset District',
         'Inner Sunset',
         'Outer Parkside',
         'Parkside',
