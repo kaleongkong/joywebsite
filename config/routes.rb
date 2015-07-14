@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  get 'main/index'
+  get '/', to: 'main#index'
   get 'main/send_email'
-  get 'main/blog'
+  get 'blog', to: 'main#blog'
   get 'main/test'
 
   # The priority is based upon order of creation: first created -> highest priority.
