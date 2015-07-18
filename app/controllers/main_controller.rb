@@ -5,15 +5,14 @@ class MainController < ApplicationController
     puts "sent: #{@sent}"
     @home_active="active"
   end
+  
   def send_email
     UserMailer.send_email(params).deliver!
   	redirect_to :controller=> 'main',:action=>'index', :sent => true
   end
+
   def blog
     @blog_active="active"
-  end
-
-  def test
   end
 
   def self.available_cities
