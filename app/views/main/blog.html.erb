@@ -26,13 +26,13 @@
       $('.edit-blog-button').on('click', function(){
         id_array = $(this).attr('id').split('-')
         selected_bid = id_array[id_array.length-1]
-        $('.edit-blog').show()
+        $('#edit-blog-'+selected_bid).show()
         $('#blog-'+selected_bid).hide()
-        $('#edit_blog_title').val($('#blog-title-'+selected_bid).text().trim())
-        $('#edit_blog_content').val($('#blog-content-'+selected_bid).html().trim())
-        $('#edit_blog_id').val(selected_bid)
+        $('#edit_blog_title_'+selected_bid).val($('#blog-title-'+selected_bid).text().trim())
+        $('#edit_blog_content_'+selected_bid).val($('#blog-content-'+selected_bid).html().trim())
+        $('#edit_blog_id_'+selected_bid).val(selected_bid)
       });
-      $('#cancel-blog-button-edit').on('click', function(){
+      $('.cancel-blog-button-edit').on('click', function(){
         $('.edit-blog').hide()
         $('#blog-'+selected_bid).show()
       });
@@ -76,31 +76,7 @@
                 <button class="btn btn-default" id = 'cancel-blog-button-add' style = 'float: right'>Cancel</button>
               </div>
             </div>
-            <div class = 'row edit-blog' hidden = 'true'>
-              <div class = 'row'>
-                <div class = 'col-lg-10 col-md-10 test'>
-                  <h2>Edit Blog</h2>
-                </div>
-              </div>
-              <%= form_tag("/blog/edit_blog", {method: 'post', id: 'edit_blog'}) do |f|%>
-                <div class="form-group col-md-12" style = 'padding-left: 0px'>
-                  <%= text_field_tag(:edit_blog_title, nil, {class: 'form-control', placeholder: 'Title'}) %> 
-                </div>
-                <div class="form-group col-md-12" style = 'padding-left: 0px'>
-                  <%= text_area_tag(:edit_blog_content, nil, class: "form-control", rows: '25', placeholder: 'Content') %>
-                </div>
-                <div class="form-group col-md-12" style = 'padding-left: 0px' hidden = true>
-                  <%= text_field_tag(:edit_blog_id, nil, {class: 'form-control'}) %> 
-                </div>
-                <div class="col-md-1" style = 'padding-left: 0px'>
-                  <button type="submit" class="btn btn-default">Submit</button>
-                </div>
-              <%end%>
-              <div class = 'col-md-11'>
-                <button class="btn btn-default">Preview</button>
-                <button class='btn btn-default cancel-blog-button' id = 'cancel-blog-button-edit' style = 'float: right'>Cancel</button>
-              </div>
-            </div>
+            
             <% Blog.all.reverse.each do |b| %>
               <%= render :partial => 'blog_template', :locals => {blog_id: b.id, blog_title: b.title, blog_content: b.content, blog_upload_time: b.created_at}%>
             <% end %>
@@ -153,12 +129,12 @@
 
         <!-- Footer -->
         <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Joy Realtor 2015</p>
-                </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <p>Copyright &copy; Joy Realtor 2015</p>
             </div>
-            <!-- /.row -->
+          </div>
+          <!-- /.row -->
         </footer>
 
     </div>

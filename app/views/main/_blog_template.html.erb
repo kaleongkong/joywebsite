@@ -1,0 +1,20 @@
+<div class = 'row edit-blog' id = 'edit-blog-<%=blog_id%>' hidden = 'true'>
+  <%= render :partial => 'edit_blog_template', :locals => {blog_id: blog_id}%>
+</div>
+<div class = 'row' class = 'blog' id = 'blog-<%=blog_id%>'>
+  <div class = 'row' >
+    <div class = 'col-lg-10 col-md-10' id = 'blog-title-<%=blog_id%>'>
+      <h2><%= blog_title %></h2>
+    </div>
+    <div class = 'col-lg-2 col-md-2' >
+      <h1 style = 'float: right; padding-right: 13px'><button class='btn btn-default edit-blog-button' id = 'edit-blog-button-<%=blog_id%>'> Edit</button></h1>
+    </div>
+  </div>
+  <!-- <p class="lead">
+      by <a href="#">Joy Chen</a>
+  </p> -->
+  <p><span class="glyphicon glyphicon-time"></span> <%= blog_upload_time %></p>
+  <div class = 'blog-content' id = 'blog-content-<%=blog_id%>'>
+    <%= blog_content %>
+  </div>
+</div>
