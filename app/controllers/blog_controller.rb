@@ -1,7 +1,7 @@
 class BlogController < ApplicationController
   def add_blog
     b = Blog.new
-    b.id = SecureRandom.hex
+    b.id = rand(99999)
     b.title = params[:blog_title]
     b.content = params[:blog_content]
     b.save
