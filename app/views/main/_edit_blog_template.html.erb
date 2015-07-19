@@ -14,10 +14,10 @@
     <%= text_field_tag("edit_blog_id_#{blog_id}".to_sym, nil, {class: 'form-control'}) %> 
   </div>
   <div class="col-md-1" style = 'padding-left: 0px'>
-    <button type="submit" class="btn btn-default">Submit</button>
+    <button type="submit" class="btn btn-info">Submit</button>
   </div>
 <%end%>
 <div class = 'col-md-11'>
-  <button class="btn btn-default">Preview</button>
-  <button class='btn btn-default cancel-blog-button-edit' id = 'cancel-blog-button-edit-<%=blog_id%>' style = 'float: right'>Cancel</button>
+  <button class="btn btn-info">Preview</button>
+  <button class='btn btn-danger cancel-blog-button-edit' id = 'cancel-blog-button-edit-<%=blog_id%>' style = 'float: right'>Cancel</button>
 </div>
