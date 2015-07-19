@@ -78,7 +78,7 @@
             </div>
             
             <% Blog.all.reverse.each do |b| %>
-              <%= render :partial => 'blog_template', :locals => {blog_id: b.id, blog_title: b.title, blog_content: b.content, blog_upload_time: b.created_at}%>
+              <%= render :partial => 'blog_template', :locals => {blog_id: b.id, blog_title: b.title, blog_content: b.content, blog_upload_time: b.created_at, blog_row_num: b.content.count("\n")+5}%>
             <% end %>
           </div>
         </div>

@@ -1,5 +1,5 @@
 <div class = 'row edit-blog' id = 'edit-blog-<%=blog_id%>' hidden = 'true'>
-  <%= render :partial => 'edit_blog_template', :locals => {blog_id: blog_id}%>
+  <%= render :partial => 'edit_blog_template', :locals => {blog_id: blog_id, blog_row_num: blog_row_num}%>
 </div>
 <div class = 'row' class = 'blog' id = 'blog-<%=blog_id%>'>
   <div class = 'row' >
