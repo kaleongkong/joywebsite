@@ -60,7 +60,7 @@
                   <h2>New Blog</h2>
                 </div>
               </div>
-              <%= form_tag("/blog/add_blog", {method: 'post', id: 'add_blog'}) do |f|%>
+              <%= form_tag('/add_blog', {method: 'post', id: 'add_blog'}) do |f|%>
                 <div class="form-group col-md-12" style = 'padding-left: 0px'>
                   <%= text_field_tag(:blog_title, nil, {class: 'form-control', placeholder: 'Title'}) %> 
                 </div>

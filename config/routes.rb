@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   get 'main/send_email'
   get 'blog', to: 'main#blog'
   get 'main/test'
-  post 'blog/add_blog'
-  post 'blog/edit_blog'
+  post 'add_blog', to: 'blog#add_blog'
+  post 'edit_blog', to: 'blog#edit_blog'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

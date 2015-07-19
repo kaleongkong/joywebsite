@@ -3,7 +3,7 @@
     <h2>Edit Blog</h2>
   </div>
 </div>
-<%= form_tag("/blog/edit_blog", {method: 'post', id: "edit_blog-#{blog_id}"}) do |f|%>
+<%= form_tag("/edit_blog", {method: 'post', id: "edit_blog-#{blog_id}"}) do |f|%>
   <div class="form-group col-md-12" style = 'padding-left: 0px'>
     <%= text_field_tag("edit_blog_title_#{blog_id}".to_sym, nil, {class: 'form-control', placeholder: 'Title'}) %> 
   </div>

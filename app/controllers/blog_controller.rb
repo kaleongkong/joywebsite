@@ -8,10 +8,18 @@ class BlogController < ApplicationController
     redirect_to :controller=> 'main',:action=>'blog', :sent => true
   end
   def edit_blog
-  	bid = params[:edit_blog_id]
+    new_params = {}
+    params.each do |k, v|
+      next unless k.include?('_')
+      key = k.split('_')
+      key.pop
+      key = key.join('_')
+      new_params[key] = v
+    end
+  	bid = new_params['edit_blog_id']
   	b = Blog.find(bid)
-  	b.title = params[:edit_blog_title]
-  	b.content = params[:edit_blog_content]
+  	b.title = new_params['edit_blog_title']
+  	b.content = new_params['edit_blog_content']
   	b.save
   	redirect_to :controller=> 'main',:action=>'blog', :sent => true
   end
