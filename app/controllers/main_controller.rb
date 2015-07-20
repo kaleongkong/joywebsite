@@ -3,7 +3,7 @@ class MainController < ApplicationController
     @sent = params[:sent]
     puts "#{District.cities[0]}"
     puts "sent: #{@sent}"
-    @home_active="active"
+    # @home_active="active"
   end
   
   def send_email
@@ -21,7 +21,7 @@ class MainController < ApplicationController
     unless params[:current_page]
       @current_page = 1
     end
-    @blog_active="active"
+    # @blog_active="active"
     @blogs = Blog.load_blogs(@current_page, @blogs_per_page)
   end
 

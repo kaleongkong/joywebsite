@@ -1,0 +1,24 @@
+.header-photo {
+  position: relative;
+  height: 450px;
+  background-image: 
+    linear-gradient(
+      rgba(255, 255, 255, 0.6), 
+      rgba(255, 255, 255, 0.6) 
+    ),
+    url(https://scontent-dfw1-1.xx.fbcdn.net/hphotos-xpa1/t31.0-8/s2048x2048/11713675_1426113117716520_5197799917165578876_o.jpg);
+  background-size: auto 800px;
+  background-position: top center;
+  background-attachment: fixed;
+  overflow: hidden; 
+}
+.logo {
+  height: 300px;
+  width: 100%;
+  background-image: url(../assets/header.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 20%;
+  /*margin-top: -50px; */
+}
