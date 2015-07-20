@@ -1,8 +1,8 @@
-<div class = 'row'>
+<!-- <div class = 'row'>
   <div class = 'col-lg-10 col-md-10'>
     <h2>Edit Blog</h2>
   </div>
-</div>
+</div> -->
 <%= form_tag("/edit_blog", {method: 'post', id: "edit_blog-#{blog_id}"}) do |f|%>
   <div class="form-group col-md-12" style = 'padding-left: 0px'>
     <%= text_field_tag("edit_blog_title_#{blog_id}".to_sym, nil, {class: 'form-control', placeholder: 'Title'}) %> 
@@ -12,6 +12,9 @@
   </div>
   <div class="form-group col-md-12" style = 'padding-left: 0px' hidden = true>
     <%= text_field_tag("edit_blog_id_#{blog_id}".to_sym, nil, {class: 'form-control'}) %> 
+  </div>
+  <div class="form-group col-md-12" style = 'padding-left: 0px' hidden = true>
+    <%= text_field_tag(:current_page, @current_page, {class: 'form-control'}) %> 
   </div>
   <div class="col-md-1" style = 'padding-left: 0px'>
     <button type="submit" class="btn btn-info">Submit</button>

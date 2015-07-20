@@ -12,7 +12,17 @@ class MainController < ApplicationController
   end
 
   def blog
+    @blogs_per_page = 3
+    @num_of_pages = Blog.all.length/@blogs_per_page
+    if @num_of_pages*@blogs_per_page < Blog.all.length
+      @num_of_pages += 1
+    end
+    @current_page = params[:current_page].to_i
+    unless params[:current_page]
+      @current_page = 1
+    end
     @blog_active="active"
+    @blogs = Blog.load_blogs(@current_page, @blogs_per_page)
   end
 
   def self.available_cities

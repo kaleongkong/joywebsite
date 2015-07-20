@@ -11,4 +11,20 @@ class Blog < ActiveRecord::Base
   	b = Blog.find('1')
   	b.content
   end
+  def self.load_blogs(section, per_page)
+    blogs = []
+    current_section = 1
+    loaded_blog = 0
+    Blog.all.sort_by{|b| b.created_at}.reverse.each_with_index do |blog, i|
+      loaded_blog += 1
+      if current_section == section
+        blogs << blog
+      end
+      if loaded_blog == per_page
+        loaded_blog = 0
+        current_section += 1
+      end
+    end
+    blogs
+  end
 end

@@ -13,7 +13,7 @@
     <script>
     $(document).ready(function(){
       var selected_bid = null;
-      <% Blog.all.sort_by{|b| b.created_at}.reverse.each do |b| %>
+      <% @blogs.each do |b| %>
         $('#blog-content-<%=b.id%>').html($('#blog-content-<%=b.id%>').text());
       <% end %>
       $('.add-blog-button').on('click', function(){
@@ -85,22 +85,24 @@
             </div>
             </div>
             
-            <% Blog.all.sort_by{|b| b.created_at}.reverse.each do |b| %>
+            <% @blogs.each do |b| %>
               <%= render :partial => 'blog_template', :locals => {blog_id: b.id, blog_title: b.title, blog_content: b.content, blog_upload_time: b.created_at, blog_row_num: b.content.count("\n")+5}%>
             <% end %>
           </div>
           <div class="pagination">
             <ul>
-              <li class="previous"><a href="#fakelink" class="fui-arrow-left"></a></li>
-              <li class="active"><a href="#fakelink">1</a></li>
-              <li><a href="#fakelink">2</a></li>
-              <li><a href="#fakelink">3</a></li>
-              <li><a href="#fakelink">4</a></li>
-              <li><a href="#fakelink">5</a></li>
-              <li><a href="#fakelink">6</a></li>
-              <li><a href="#fakelink">7</a></li>
-              <li><a href="#fakelink">8</a></li>
-              <li class="next"><a href="#fakelink" class="fui-arrow-right"></a></li>
+              <li class="previous"><a href="/blog?current_page=<%=(@current_page-1 > 1) ? (@current_page-1) : 1%>" class="fui-arrow-left"></a></li>
+              <% last_page = 1%>
+              <% @num_of_pages.times do |i| %>
+                <% if i == @current_page-1%>
+                  <li class="active">
+                <% else %>
+                  <li>
+                <% end %>
+                <% last_page +=1 %>
+                <a href="/blog?current_page=<%=i+1%>"><%=i+1%></a></li>
+              <% end %>
+              <li class="next"><a href="/blog?current_page=<%=(@current_page+1 < last_page) ? (@current_page+1) : last_page-1%>" class="fui-arrow-right"></a></li>
             </ul>
           </div> <!-- /pagination -->
         </div>

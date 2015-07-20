@@ -5,7 +5,7 @@ class BlogController < ApplicationController
     b.title = params[:blog_title]
     b.content = params[:blog_content]
     b.save
-    redirect_to :controller=> 'main',:action=>'blog', :sent => true
+    redirect_to :controller=> 'main',:action=>'blog'
   end
   def edit_blog
     new_params = {}
@@ -21,7 +21,7 @@ class BlogController < ApplicationController
   	b.title = new_params['edit_blog_title']
   	b.content = new_params['edit_blog_content']
   	b.save
-  	redirect_to :controller=> 'main',:action=>'blog', :sent => true
+  	redirect_to :controller=> 'main',:action=>'blog',:current_page=>params[:current_page]
   end
   def delete_blog
   end
