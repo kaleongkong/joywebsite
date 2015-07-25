@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><b> Joy Chen </b></a>
+      <a class="navbar-brand" href="/"><b> Joy Chen </b></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -16,14 +16,20 @@
       <ul class="nav navbar-nav">
         <li class="nav_item <%=@home_active%>" id = "home"><a href="/">Home</a></li>
         <li class="nav_item <%=@blog_active%>" id = "blog"><a href="/blog">Blog</a></li>
-        <li class="nav_item"><a href="#">Resources</a></li>
-        <li class="nav_item"><a href="#">About Me</a></li>
-        <li class="nav_item"><a href="#">Contact </a> </li>
+        <!-- <li class="nav_item"><a href="#">Resources</a></li> -->
+        <li class="nav_item" id = 'about me'><a href="/about_me">About Me</a></li>
+        <!-- <li class="nav_item"><a href="#">Contact </a> </li> -->
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href=''>Login</a></li>
-        <li><a href=''>Sign up</a></li>
-      </ul>
+      <%if @blogs%>
+        <ul class="nav navbar-nav navbar-right">
+          <% if session[:login]%>
+            <li><a href='logout'><button>Logout</button></a></li>
+          <% else %>
+            <li><a id = 'admin_login'><button>Admin</button></a></li>
+            <!-- <li><a href=''>Sign up</a></li> -->
+          <% end %>
+        </ul>
+      <% end %>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

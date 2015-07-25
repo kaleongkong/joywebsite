@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   get 'main/test'
   post 'add_blog', to: 'blog#add_blog'
   post 'edit_blog', to: 'blog#edit_blog'
-
+  post 'sign_in', to: 'main#sign_in'
+  get 'logout', to: 'main#sign_out'
+  get 'about_me', to: 'main#about_me'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

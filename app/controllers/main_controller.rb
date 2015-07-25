@@ -1,8 +1,8 @@
 class MainController < ApplicationController
   def index
     @sent = params[:sent]
-    puts "#{District.cities[0]}"
-    puts "sent: #{@sent}"
+    # puts "#{District.cities[0]}"
+    # puts "sent: #{@sent}"
     # @home_active="active"
   end
   
@@ -17,6 +17,7 @@ class MainController < ApplicationController
     if @num_of_pages*@blogs_per_page < Blog.all.length
       @num_of_pages += 1
     end
+    @error = session[:error]
     @current_page = params[:current_page].to_i
     unless params[:current_page]
       @current_page = 1
@@ -27,6 +28,25 @@ class MainController < ApplicationController
 
   def self.available_cities
     District.cities.map!{|d| [d,d]}
+  end
+
+  def sign_in
+    user_name = params[:user_name]
+    pw = params[:password]
+    if user_name == 'joyadmin' && pw == 'joyadmin'
+      session[:login] = true 
+      session[:error] = nil
+    else
+      session[:error] = 'invalid_user_login'
+      redirect_to :controller=> 'main',:action=>'blog'
+      return
+    end
+    redirect_to :back
+  end
+
+  def sign_out
+    session[:login] = false
+    redirect_to :back
   end
   
   def self.us_states
