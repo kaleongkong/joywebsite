@@ -9,9 +9,12 @@
     </p>
     <p>Here is your user survey's response:</p>
     <p>Desired Address: </p>
-    <p><%="#{@desired_st_addr}, #{@desired_city}, #{@desired_state} #{@desired_zip}"%></p>
+    <% @locations.each_with_index do |l, i| %>
+      <p>Location <%=i+1 %>: <%=l[:district]%></p>
+    <% end %>
     <p>Price Range: <%=@price_range%></p>
     <p>Size: <%=@size%></p>
-    <p>Target Type: <%=@desired_property_type%> </p>
+    <p>Target Type: <%=@desired_property_type%></p>
+    <p>Additional Information: <%= @additional_info%> </p>
   </body>
 </html>

@@ -7,7 +7,30 @@ class MainController < ApplicationController
   end
   
   def send_email
-    UserMailer.send_email(params).deliver!
+    puts params
+    email_params = {}
+    desired_cities = []
+    desired_districts = []
+    email_params[:name] = params[:name]
+    email_params[:email] = params[:email]
+    email_params[:price_range] = params[:price_range]
+    email_params[:size] = params[:size]
+    email_params[:additional_info] = params[:additional_info]
+    email_params[:single_family] = params[:single_family] 
+    email_params[:condo] = params[:condo]
+    email_params[:multiunits] = params[:multiunits]
+    email_params[:locations] = []
+    params.each do |k, v|
+      if k.include?('desired_city')
+        desired_cities << v
+      elsif k.include?('desired_district')
+        desired_districts << v
+      end
+    end
+    desired_districts.length.times do |i|
+      email_params[:locations] << {district: desired_districts[i], city: desired_cities[i]}
+    end
+    UserMailer.send_email(email_params).deliver!
   	redirect_to :controller=> 'main',:action=>'index', :sent => true
   end
 
