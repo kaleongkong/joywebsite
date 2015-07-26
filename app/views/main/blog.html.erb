@@ -12,6 +12,17 @@
     <%= render partial: "header" %>
     <script>
     $(document).ready(function(){
+      $('#close_modal').on('click',function(){
+        $('#delete-confirm').modal(false);
+      })
+      $('.delete-blog-button').on('click', function(){
+        $('#delete-confirm').modal(true);
+        console.log($(this).attr('id'));
+        var delete_blog_id = $(this).attr('id').split('-')[3]
+        console.log(delete_blog_id)
+        $('#delete_blog_id').val(delete_blog_id)
+        console.log($('#delete_blog_id').val())
+      });
       var selected_bid = null;
       <% @blogs.each do |b| %>
         $('#blog-content-<%=b.id%>').html($('#blog-content-<%=b.id%>').text());
@@ -99,6 +110,31 @@
     </div>
   </div>
 </div>
+
+<div class="modal" id="delete-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style = 'margin-top: 20%'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header alert-danger">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Alert!</h4>
+      </div>
+      <div class="modal-body">
+        <p>This action will delete your blog and cannot be recovered. Are you Sure?</p>
+      </div>
+      <div class="modal-footer row">
+      <%= form_tag("/delete_blog", {method: 'post', id: 'delete_blog'}) do |f|%>
+        <div class="form-group col-md-6">
+          <%= text_field_tag(:delete_blog_id, nil, {class: 'form-control', style: 'visibility: hidden'}) %> 
+        </div>
+        <div class="col-md-6">
+          <button type = 'submit' class="btn btn-danger" id ="close_modal">Delete</button>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container" id = 'signin-error' style='position:absolute; z-index: 500; top:30%; bottom:0; left:0; right:0; margin:0 auto;' hidden>
 </div>
   <div id = 'main-body'>
