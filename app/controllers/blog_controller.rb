@@ -24,5 +24,9 @@ class BlogController < ApplicationController
   	redirect_to :controller=> 'main',:action=>'blog',:current_page=>params[:current_page]
   end
   def delete_blog
+    bid = params[:delete_blog_id]
+    b = Blog.find(bid)
+    b.destroy
+    redirect_to :controller=> 'main',:action=>'blog'
   end
 end
